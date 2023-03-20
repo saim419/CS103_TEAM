@@ -44,6 +44,50 @@ class GPT():
 
         response = completion.choices[0].text
         return response
+    '''Saim Siddiqui'''
+    def getCarPreferences():
+        type_of_car = input("Do you prefer sport or normal cars? ")
+        age_of_car = input("Do you prefer a new or an old car? ")
+        brand_of_car = input("Which brand do you prefer? ")
+        return "You prefer a {age_of_car} {type_of_car} car from the {brand_of_car} brand."
+    
+   @app.route('/gptdemo', methods=['GET', 'POST'])
+   def gptdemo():
+       ''' handle a get request by sending a form 
+       and a post request by returning the GPT response
+       '''
+       if request.method == 'POST':
+        # Ask the user for their car preferences
+          gptAPI = GPT(os.environ.get("APIKEY"))
+          car_preferences = gptAPI.getCarPreferences()
+         # Get the prompt from the form
+          prompt = request.form['prompt']
+         # Combine the prompt and car preferences into one string
+          input_text = f"{prompt}\n\n{car_preferences}"
+        # Get the GPT response
+          answer = gptAPI.getResponse(input_text)
+        # Return the response to the user
+          return f'''
+            <h1>GPT Demo</h1>
+            <pre style="bgcolor:yellow">{prompt}</pre>
+            <hr>
+            Here is the answer in text mode:
+            <div style="border:thin solid black">{answer}</div>
+            Here is the answer in "pre" mode:
+            <pre style="border:thin solid black">{answer}</pre>
+            <a href={url_for('gptdemo')}> make another query</a>
+            '''
+         else:
+              return '''
+            <h1>GPT Demo App</h1>
+            Enter your query below
+            <form method="post">
+                <textarea name="prompt" rows="5" cols="50"></textarea>
+                <br>
+                <input type="submit" value="Submit">
+            </form>
+                    '''
+
 
 if __name__=='__main__':
     '''
