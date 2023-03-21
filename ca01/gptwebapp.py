@@ -111,6 +111,42 @@ def gptfashion():
                 <input type="submit" value="Submit">
             </form>
         '''
+#Jaden Farquhar's Musical Artist Recommendation page Query
+@app.route('/gptMusic', methods=['GET', 'POST'])
+def gptMusic():
+    ''' handle a get request by sending a form 
+        and a post request by returning the GPT response
+    '''
+    if request.method == 'POST':
+        gptAPI = GPT(os.environ.get("APIKEY"))
+        #prompt to ask GPT based on the five artists the user gives
+        musicPreferences = "List three musical artists similar to these"
+        #Request the user's five favorite artists
+        prompt = request.form['prompt']
+        #combine the user's inputed information with the prompt
+        input_text = f"{prompt}\n\n {musicPreferences}"
+        #send gpt the combined input
+        answer = gptAPI.getResponse(input_text)
+        return f'''
+            <h1>GPT Music</h1>
+            <pre style="bgcolor:yellow">{prompt}</pre>
+            <hr>
+            Here is the answer in text mode:
+            <div style="border:thin solid black">{answer}</div>
+            Here is the answer in "pre" mode:
+            <pre style="border:thin solid black">{answer}</pre>
+            <a href={url_for('gptMusic')}> make another query</a>
+        '''
+    else:
+        return '''
+        <h1>GPT Music</h1>
+        List your 5 favorite Music artists
+        <form method="post">
+            <textarea name="prompt"></textarea>
+            <p><input type=submit value="get response">
+        </form>
+        '''
+    
 
 if __name__=='__main__':
     # run the code on port 5001, MacOS uses port 5000 for its own service :(
