@@ -90,7 +90,7 @@ def gptFashion():
     if request.method == 'POST':
         # Ask the user for their fashion style
         gptAPI = GPT(os.environ.get("APIKEY"))
-        fashion_style = "Enter your fashion style and list your budget and clothing brands to shop and list exact links to the shopping page. "
+        fashion_style = "Enter your fashion style and list your budget and clothing brands to shop. "
         # Get the prompt from the form
         prompt = request.form['prompt']
         # Combine the prompt and fashion style into one string
