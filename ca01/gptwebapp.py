@@ -38,33 +38,43 @@ def index():
         <a href="{url_for('gptdemo')}">Ask questions to GPT</a>
     '''
 
-
+#Saim Siddiqui Car Listing page query
 @app.route('/gptdemo', methods=['GET', 'POST'])
 def gptdemo():
-    ''' handle a get request by sending a form 
-        and a post request by returning the GPT response
+    ''' handle a get request by sending a form
+    and a post request by returning the GPT response
     '''
     if request.method == 'POST':
+        # Ask the user for their car preferences
+        gptAPI = GPT(os.environ.get("APIKEY"))
+        car_preferences = "List 100 cars that meet these requirements and list their prices and where in United States has most of these cars and list exact links to the car page the car is listed  and mileage the user wants give accordingly the cars with that sort of mileage. "
+        # Get the prompt from the form
         prompt = request.form['prompt']
-        answer = gptAPI.getResponse(prompt)
+        # Combine the prompt and car preferences into one string
+        input_text = f"{prompt}\\n\\n{car_preferences}"
+        # Get the GPT response
+        answer = gptAPI.getResponse(input_text)
+        # Return the response to the user
         return f'''
-        <h1>GPT Demo</h1>
-        <pre style="bgcolor:yellow">{prompt}</pre>
-        <hr>
-        Here is the answer in text mode:
-        <div style="border:thin solid black">{answer}</div>
-        Here is the answer in "pre" mode:
-        <pre style="border:thin solid black">{answer}</pre>
-        <a href={url_for('gptdemo')}> make another query</a>
+            <h1>GPT Demo</h1>
+            <pre style="background-color: yellow">{prompt}</pre>
+            <hr>
+            Here is the answer in text mode:
+            <div style="border:thin solid black; white-space: pre-wrap">{answer}</div>
+            Here is the answer in "pre" mode:
+            <pre style="border:thin solid black; white-space: pre-wrap">{answer}</pre>
+            <a href="{url_for('gptdemo')}">make another query</a>
         '''
     else:
         return '''
-        <h1>GPT Demo App</h1>
-        Enter your query below
-        <form method="post">
-            <textarea name="prompt"></textarea>
-            <p><input type=submit value="get response">
-        </form>
+            <h1>Car Listing</h1>
+            Write a description of the cars you like:
+            <form method="post">
+                <textarea name="prompt" rows="5" cols="50"></textarea>
+
+
+                <input type="submit" value="Submit">
+            </form>
         '''
    
 
