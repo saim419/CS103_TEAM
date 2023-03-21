@@ -77,6 +77,7 @@ def gptdemo():
             </form>
         '''
 # Harper Pham's Fashion Recommendation page query
+@app.route('/gptfashion', methods=['GET', 'POST'])
 def gptfashion():
     ''' handle a get request by sending a form
     and a post request by returning the GPT response
