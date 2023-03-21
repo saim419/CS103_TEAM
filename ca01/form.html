@@ -14,3 +14,18 @@
 	</form>
 </body>
 </html>
+
+<head>
+	<title>FASHION</title>
+</head>
+<body>
+	<h1>Fashion Style</h1>
+	<form action="{{ url_for('gptfshion') }}" method="post">
+		<label for="prompt">Write a description of your fashion style</label>
+
+		<textarea id="prompt" name="prompt" rows="5" cols="50"></textarea>
+
+		<button type="submit">Submit</button>
+	</form>
+</body>
+</html>
