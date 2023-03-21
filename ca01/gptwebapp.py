@@ -76,7 +76,41 @@ def gptdemo():
                 <input type="submit" value="Submit">
             </form>
         '''
-   
+# Harper Pham's Fashion Recommendation page query
+def gptfashion():
+    ''' handle a get request by sending a form
+    and a post request by returning the GPT response
+    '''
+    if request.method == 'POST':
+        # Ask the user for their fashion style
+        gptAPI = GPT(os.environ.get("APIKEY"))
+        fashion_style = "Enter your fashion style and list your budget and clothing brands to shop and list exact links to the shopping page. "
+        # Get the prompt from the form
+        prompt = request.form['prompt']
+        # Combine the prompt and fashion style into one string
+        input_text = f"{prompt}\\n\\n{fashion_style}"
+        # Get the GPT response
+        answer = gptAPI.getResponse(input_text)
+        # Return the response to the user
+        return f'''
+            <h1>Fashion Style</h1>
+            <pre style="background-color: yellow">{prompt}</pre>
+            <hr>
+            Here is the answer in text mode:
+            <div style="border:thin solid black; white-space: pre-wrap">{answer}</div>
+            Here is the answer in "pre" mode:
+            <pre style="border:thin solid black; white-space: pre-wrap">{answer}</pre>
+            <a href="{url_for('gptdemo')}">make another query</a>
+        '''
+    else:
+        return '''
+            <h1>Fashion Style</h1>
+            Write a description of your fashion style:
+            <form method="post">
+                <textarea name="prompt" rows="5" cols="50"></textarea>
+                <input type="submit" value="Submit">
+            </form>
+        '''
 
 if __name__=='__main__':
     # run the code on port 5001, MacOS uses port 5000 for its own service :(
