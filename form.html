@@ -1,9 +1,16 @@
-<h1>{{ name }}'s Page</h1>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CARS</title>
+</head>
+<body>
+	<h1>Car Listing</h1>
+	<form action="{{ url_for('gptdemo') }}" method="post">
+		<label for="prompt">Write a description of the cars you like:</label>
 
-<p>Enter a prompt to get a response:</p>
+		<textarea id="prompt" name="prompt" rows="5" cols="50"></textarea>
 
-<form method="post">
-    <textarea name="prompt"></textarea>
-    <br>
-    <input type="submit" value="Submit">
-</form>
+		<button type="submit">Submit</button>
+	</form>
+</body>
+</html>
