@@ -29,18 +29,24 @@ gptAPI = GPT(os.environ.get('APIKEY'))
 app.secret_key = b'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'
 
 
+
 @app.route('/')
 def index():
     ''' display a link to the general query page '''
     print('processing / route')
     return f'''
-        <h1>GPT Demo</h1>
-        <a href="{url_for('gptdemo')}">Ask questions to GPT</a>
+        <h1>GPT Team Monsters</h1>
+       
+        <a href="{url_for('gptCars')}">Ask questions to GPTCars</a>
+        <br></br>
+        <a href="{url_for('gptMusic')}">Ask questions to GPTMusic</a>
+        <br></br>
+        <a href="{url_for('gptFashion')}">Ask questions to GPTFashion</a>
     '''
 
-#Saim Siddiqui Car Listing page query
-@app.route('/gptdemo', methods=['GET', 'POST'])
-def gptdemo():
+#Saim
+@app.route('/gptCars', methods=['GET', 'POST'])
+def gptCars():
     ''' handle a get request by sending a form
     and a post request by returning the GPT response
     '''
@@ -63,7 +69,7 @@ def gptdemo():
             <div style="border:thin solid black; white-space: pre-wrap">{answer}</div>
             Here is the answer in "pre" mode:
             <pre style="border:thin solid black; white-space: pre-wrap">{answer}</pre>
-            <a href="{url_for('gptdemo')}">make another query</a>
+            <a href="{url_for('gptCars')}">make another query</a>
         '''
     else:
         return '''
@@ -71,14 +77,13 @@ def gptdemo():
             Write a description of the cars you like:
             <form method="post">
                 <textarea name="prompt" rows="5" cols="50"></textarea>
-
-
                 <input type="submit" value="Submit">
             </form>
         '''
+
 # Harper Pham's Fashion Recommendation page query
-@app.route('/gptfashion', methods=['GET', 'POST'])
-def gptfashion():
+@app.route('/gptFashion', methods=['GET', 'POST'])
+def gptFashion():
     ''' handle a get request by sending a form
     and a post request by returning the GPT response
     '''
@@ -101,7 +106,7 @@ def gptfashion():
             <div style="border:thin solid black; white-space: pre-wrap">{answer}</div>
             Here is the answer in "pre" mode:
             <pre style="border:thin solid black; white-space: pre-wrap">{answer}</pre>
-            <a href="{url_for('gptdemo')}">make another query</a>
+            <a href="{url_for('gptFashion')}">make another query</a>
         '''
     else:
         return '''
@@ -112,7 +117,7 @@ def gptfashion():
                 <input type="submit" value="Submit">
             </form>
         '''
-#Jaden Farquhar's Musical Artist Recommendation page Query
+
 @app.route('/gptMusic', methods=['GET', 'POST'])
 def gptMusic():
     ''' handle a get request by sending a form 
@@ -120,13 +125,12 @@ def gptMusic():
     '''
     if request.method == 'POST':
         gptAPI = GPT(os.environ.get("APIKEY"))
-        #prompt to ask GPT based on the five artists the user gives
         musicPreferences = "List three musical artists similar to these"
-        #Request the user's five favorite artists
+        
         prompt = request.form['prompt']
-        #combine the user's inputed information with the prompt
+
         input_text = f"{prompt}\n\n {musicPreferences}"
-        #send gpt the combined input
+
         answer = gptAPI.getResponse(input_text)
         return f'''
             <h1>GPT Music</h1>
@@ -147,7 +151,7 @@ def gptMusic():
             <p><input type=submit value="get response">
         </form>
         '''
-    
+   
 
 if __name__=='__main__':
     # run the code on port 5001, MacOS uses port 5000 for its own service :(
