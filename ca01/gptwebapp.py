@@ -35,15 +35,105 @@ def index():
     return f'''
         <h1>GPT Team Monsters</h1>
        
+        <a href="{url_for('team')}">Team Page</a>
+        <br></br>
+        <a href="{url_for('about')}">About Page</a>
+        <br></br>
         <a href="{url_for('gptCars')}">Ask questions to GPTCars</a>
         <br></br>
         <a href="{url_for('gptMusic')}">Ask questions to GPTMusic</a>
         <br></br>
         <a href="{url_for('gptFashion')}">Ask questions to GPTFashion</a>
-        <br></br>
-        <a href="{url_for('about')}">About Page</a>
+        
     '''
 
+@app.route('/team')
+def team():
+    return f'''<h1>The Team Monsters</h1>
+
+<ul>
+    <li><a href="{url_for('gptCars')}", name='Saim') }}">Saim</a></li>
+    <p>My role was to create a car listing that a user enters and resturns the top 10 cars that they would like and give the price of it.</p>
+    <li><a href="{url_for('gptFashion')}", name='Harper') }}">Harper</a></li>
+    <p>My role was to create a fashion recommendation that a user enters and resturns the clothing items that match their preferences and the prices of each item.</p>
+    <li><a href="{url_for('gptMusic')}", name='Jaden') }}">Jaden</a></li>
+    <p>My role was to create a music recommendation system, that recommends three additional artists, based on your five favorite artists the user inputs.</p>
+    <br></br>
+    <a href="{url_for('index')}">back to Home</a>
+    '''
+
+@app.route('/about',methods=['GET', 'POST'])   
+def about():
+    return f'''
+    <h1>{{ Saim Siddiqui }}'s Car Listing</h1>
+
+    <p>Write a description of the cars you like::</p>
+
+    <pre>{{list sports cars}}</pre>
+
+    <p>GPT's response:</p>
+
+    <pre>{{ 1. Porsche 911 Carrera 4S Cabriolet - $123,514 - Most of these cars are available in California; https://www.porsche.com/usa/models/911/911-carrera-4s-cabriolet/ - Up to 24 MPG
+
+    2. Jaguar F-Type SVR Convertible - $127,595 - Most of these cars are available in Florida; https://www.jaguarusa.com/all-models/f-type/f-type-svr/index.html - Up to 22 MPG
+    
+    3. Mercedes-Benz AMG GT Roadster - $149,000 - Most of these cars are available in New York; https://www.mbusa.com/en/vehicles/mercedes-benz/amg/amg-gt-roadster - Up to 21 MPG
+    
+    4. BMW M8 Convertible - $142,195 - Most of these cars are available in Texas; https://www.bmwusa.com/vehicles/m-models/m8-convertible.html - Up to 24 MPG
+    
+    5. Audi R8 Spyder - $169,900 - Most of these cars are available in California; https://www.audiusa.com/models/audi-r8-spyder - Up to 19 MPG
+    
+    6. Lamborghini Huracan LP610-4 Spyder - $280,000 - Most of these cars are available in California; https://www.lamborghini.com/en-en/models/huracan/huracan-spyder - Up to 18 MPG
+    
+    7. Aston Martin V12 Vantage S Roadster - $172,743 - Most of these cars are available in Florida; https://www.astonmartin.com/en-us/models/vantage/vantage-s/roadster - Up to 16 MPG
+    
+    8. Maserati GranTurismo Convertible - $151,790 - Most of these cars are available in California; https://www.maseratiusa.com/gran-turismo-convertible - Up to 17 MPG
+    
+    9. Nissan GT-R Nismo - $177,030 - Most of these cars are available in California; https://www.nissanusa.com/vehicles/sports-cars/gt-r-nismo.html - Up to 17 MPG
+    
+    10. Cadillac ATS-V Coupe - $62,890 - Most of these cars are available in California; https://www.cadillac.com/ats-sedan/ats-v-coupe - Up to 21 MPG }}</pre>
+
+    <a href="{url_for('gptCars')}">Ask questions to GPTCars</a>
+
+
+    <h1>Jaden's Page</h1> 
+
+    <p>Tell GPT your favorite Music Artists:</p>
+
+    <pre>{{List three musical artists similar to these}}</pre>
+
+    <p>GPT's response:</p>
+
+    <pre>{{1. Chance the Rapper
+        2. J. Cole
+        3. Kid Cudi}}</pre>
+
+    <a href="{url_for('gptMusic')}">Ask questions to GPTMusic</a>
+
+    <h1>Harper's Fashion Style</h1>
+    <p>Write a description of your fashion style:</p>
+
+    <pre>{{List clothing items that match the preferences}}</pre>
+
+    <p>GPT's response:</p>
+
+    <pre>{{1. Brandy Melville Reese Denim Skirt ($42)
+    2. Brandy Melville Crop Pocket Tee ($20)
+    3. Brandy Melville Pink Logo Patch Hat ($25)
+    4. Brandy Melville Daisy Print Shorts ($35)
+    5. Brandy Melville Cropped Mesh Tank ($30)
+    6. Brandy Melville Eyelet Shorts ($35)
+    7. Brandy Melville Chevron Print Shirt ($45)
+    8. Brandy Melville Striped Drawstring Shorts ($25)
+    9. Brandy Melville Tie Front Shirt ($35)
+    10. Brandy Melville Gingham Romper ($45)}}</pre>
+
+    <a href="{url_for('gptFashion')}">Ask questions to GPTFashion</a>
+    <br></br>
+    <a href="{url_for('index')}">back to Home</a>
+    '''
+
+    
 #Saim
 @app.route('/gptCars', methods=['GET', 'POST'])
 def gptCars():
@@ -157,73 +247,6 @@ def gptMusic():
             <p><input type=submit value="get response">
         </form>
         '''
-@app.route('/about',methods=['GET', 'POST'])   
-def about():
-    return f'''
-    <h1>{{ Saim Siddiqui }}'s Car Listing</h1>
-
-    <p>Write a description of the cars you like::</p>
-
-    <pre>{{list sports cars}}</pre>
-
-    <p>GPT's response:</p>
-
-    <pre>{{ 1. Porsche 911 Carrera 4S Cabriolet - $123,514 - Most of these cars are available in California; https://www.porsche.com/usa/models/911/911-carrera-4s-cabriolet/ - Up to 24 MPG
-
-    2. Jaguar F-Type SVR Convertible - $127,595 - Most of these cars are available in Florida; https://www.jaguarusa.com/all-models/f-type/f-type-svr/index.html - Up to 22 MPG
-    
-    3. Mercedes-Benz AMG GT Roadster - $149,000 - Most of these cars are available in New York; https://www.mbusa.com/en/vehicles/mercedes-benz/amg/amg-gt-roadster - Up to 21 MPG
-    
-    4. BMW M8 Convertible - $142,195 - Most of these cars are available in Texas; https://www.bmwusa.com/vehicles/m-models/m8-convertible.html - Up to 24 MPG
-    
-    5. Audi R8 Spyder - $169,900 - Most of these cars are available in California; https://www.audiusa.com/models/audi-r8-spyder - Up to 19 MPG
-    
-    6. Lamborghini Huracan LP610-4 Spyder - $280,000 - Most of these cars are available in California; https://www.lamborghini.com/en-en/models/huracan/huracan-spyder - Up to 18 MPG
-    
-    7. Aston Martin V12 Vantage S Roadster - $172,743 - Most of these cars are available in Florida; https://www.astonmartin.com/en-us/models/vantage/vantage-s/roadster - Up to 16 MPG
-    
-    8. Maserati GranTurismo Convertible - $151,790 - Most of these cars are available in California; https://www.maseratiusa.com/gran-turismo-convertible - Up to 17 MPG
-    
-    9. Nissan GT-R Nismo - $177,030 - Most of these cars are available in California; https://www.nissanusa.com/vehicles/sports-cars/gt-r-nismo.html - Up to 17 MPG
-    
-    10. Cadillac ATS-V Coupe - $62,890 - Most of these cars are available in California; https://www.cadillac.com/ats-sedan/ats-v-coupe - Up to 21 MPG }}</pre>
-
-    <a href="{url_for('gptCars')}">Ask questions to GPTCars</a>
-
-
-    <h1>Jaden's Page</h1> 
-
-    <p>Tell GPT your favorite Music Artists:</p>
-
-    <pre>{{List three musical artists similar to these}}</pre>
-
-    <p>GPT's response:</p>
-
-    <pre>{{1. Chance the Rapper
-        2. J. Cole
-        3. Kid Cudi}}</pre>
-
-    <a href="{url_for('gptMusic')}">Ask questions to GPTMusic</a>
-
-    <h1>Harper's Fashion Style</h1>
-    <p>Write a description of your fashion style:</p>
-
-    <pre>{{List clothing items that match the preferences}}</pre>
-
-    <p>GPT's response:</p>
-
-    <pre>{{1. Brandy Melville Reese Denim Skirt ($42)
-    2. Brandy Melville Crop Pocket Tee ($20)
-    3. Brandy Melville Pink Logo Patch Hat ($25)
-    4. Brandy Melville Daisy Print Shorts ($35)
-    5. Brandy Melville Cropped Mesh Tank ($30)
-    6. Brandy Melville Eyelet Shorts ($35)
-    7. Brandy Melville Chevron Print Shirt ($45)
-    8. Brandy Melville Striped Drawstring Shorts ($25)
-    9. Brandy Melville Tie Front Shirt ($35)
-    10. Brandy Melville Gingham Romper ($45)}}</pre>
-
-    <a href="{url_for('gptFashion')}">Ask questions to GPTFashion</a>'''
 
 if __name__=='__main__':
     # run the code on port 5001, MacOS uses port 5000 for its own service :(
