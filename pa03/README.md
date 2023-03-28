@@ -10,6 +10,70 @@ Not all lessons have branches.
 Saim Siddiqui 
 I worked on writing the pytest codes and the transaction.py and tracker.py methods all together. I did most of the work. But I was unable to debug some of the pytest test_transaction.py problems resolved.
 '''
+
+'''
+(base) saimsiddiqui@Saims-MacBook-Pro lesson19 % pylint transaction.py
+************* Module transaction
+transaction.py:10:0: C0301: Line too long (110/100) (line-too-long)
+transaction.py:27:0: C0301: Line too long (114/100) (line-too-long)
+transaction.py:45:0: C0301: Line too long (108/100) (line-too-long)
+transaction.py:64:0: C0301: Line too long (101/100) (line-too-long)
+transaction.py:82:0: C0305: Trailing newlines (trailing-newlines)
+transaction.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+transaction.py:23:4: R0913: Too many arguments (6/5) (too-many-arguments)
+transaction.py:39:4: C0116: Missing function or method docstring (missing-function-docstring)
+transaction.py:45:4: R0913: Too many arguments (6/5) (too-many-arguments)
+transaction.py:64:86: E0602: Undefined variable 'transaction_id' (undefined-variable)
+
+------------------------------------------------------------------
+Your code has been rated at 6.74/10 (previous run: 7.89/10, -1.15) 
+
+
+
+'''
+'''
+(base) saimsiddiqui@Saims-MacBook-Pro lesson19 % pylint tracker.py
+************* Module tracker
+tracker.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+tracker.py:4:0: C0116: Missing function or method docstring (missing-function-docstring)
+tracker.py:26:21: E1101: Instance of 'Transaction' has no 'get_categories' member (no-member)
+tracker.py:33:12: E1101: Instance of 'Transaction' has no 'add_category' member (no-member)
+tracker.py:38:12: E1101: Instance of 'Transaction' has no 'modify_category' member (no-member)
+tracker.py:40:23: E1120: No value for argument 'transaction_id' in method call (no-value-for-parameter)
+tracker.py:47:12: E1120: No value for argument 'description' in method call (no-value-for-parameter)
+tracker.py:54:18: E1101: Instance of 'Transaction' has no 'summarize_by_date' member (no-member)
+tracker.py:58:18: E1101: Instance of 'Transaction' has no 'summarize_by_month' member (no-member)
+tracker.py:62:18: E1101: Instance of 'Transaction' has no 'summarize_by_year' member (no-member)
+tracker.py:66:18: E1101: Instance of 'Transaction' has no 'summarize_by_category' member (no-member)
+tracker.py:20:0: R0912: Too many branches (27/12) (too-many-branches)
+tracker.py:2:0: C0411: standard import "import sys" should be placed before "from transaction import Transaction" (wrong-import-order)
+
+------------------------------------------------------------------
+Your code has been rated at 2.34/10 (previous run: 1.59/10, +0.76)
+
+'''
+I added all of these methods in tracker.py
+'''
+(base) saimsiddiqui@Saims-MacBook-Pro lesson19 % python3 tracker.py
+
+    0. quit
+    1. show categories
+    2. add category
+    3. modify category
+    4. show transactions
+    5. add transaction
+    6. delete transaction
+    7. summarize transactions by date
+    8. summarize transactions by month
+    9. summarize transactions by year
+    10. summarize transactions by category
+    11. print this menu
+    
+'''
+
+
+
+
 '''(base) saimsiddiqui@Saims-MacBook-Pro lesson19 % pytest test_transaction.py
 
 ============================= test session starts ==============================
