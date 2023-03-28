@@ -1,78 +1,83 @@
 import sqlite3
-import csv
 
-from importlib_metadata import re
+class Transaction:
+    """
+    A class that interacts with a SQLite database to add, update, delete, and retrieve transactions.
+    """
+
+    def __init__(self, db_file):
+        """
+        Initializes a connection to the SQLite database and creates a transactions table if it does not exist.
+        """
+        self.conn = sqlite3.connect(str(db_file))
+        self.cursor = self.conn.cursor()
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS transactions
+                                (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                item_number INTEGER,
+                                amount REAL,
+                                category TEXT,
+                                date TEXT,
+                                description TEXT)''')
+        self.conn.commit()
+
+    def add_transaction(self, item_number, amount, category, date, description):
+        """
+        Adds a transaction to the transactions table with the given parameters.
+        """
+        sql = "INSERT INTO transactions (item_number, amount, category, date, description) VALUES (?, ?, ?, ?, ?)"
+        values = (item_number, amount, category, date, description)
+        self.cursor.execute(sql, values)
+        self.conn.commit()
+
+    def get_transaction(self, transaction_id):
+        """
+        Retrieves a transaction from the transactions table with the given id.
+        """
+        self.cursor.execute('''SELECT * FROM transactions WHERE id = ?''', (transaction_id,))
+        return self.cursor.fetchone()
+
+    def get_all_transactions(self):
+        sql = "SELECT * FROM transactions"
+        self.cursor.execute(sql)
+        return self.cursor.fetchall()
 
 
-def toDict(t):
-    ''' t is a tuple (rowid, itemNum, amount,category, date, description)'''
-    print('t='+str(t))
-    transaction = {'rowid':t[0], 'itemNum':t[1], 'amount':t[2], 'category':t[3], 'date':t[4], 'description':t[5]}
-    return transaction
+    def update_transaction(self, item_number=None, amount=None, category=None, date=None, description=None):
+        """
+        Updates a transaction in the transactions table with the given id and parameters.
+        """
+        updates = []
+        if item_number is not None:
+            updates.append('item_number = {}'.format(item_number))
+        if amount is not None:
+            updates.append('amount = {}'.format(amount))
+        if category is not None:
+            updates.append('category = "{}"'.format(category))
+        if date is not None:
+            updates.append('date = "{}"'.format(date))
+        if description is not None:
+            updates.append('description = "{}"'.format(description))
 
-class transactions():
-    def __init__(self):
-        self.runQuery('''CREATE TABLE IF NOT EXISTS transactions
-                    (itemNum int, amount int, category text, date text, description text,)''',())
-        #create a separate categories table so categories can be added and modified
-        #if a category for an item does not exist in the categories list, the added item should
-        #be rejected
-        self.runQuery('''CREATE TABLE IF NOT EXISTS categories
-                    (id int, name text)''',())
-                    
-    
-    def selectActive(self):
-        ''' return all of the uncompleted tasks as a list of dicts.'''
-        return self.runQuery("SELECT rowid,* from transaction where completed=0",())
+        if len(updates) == 0:
+            return
 
-    def selectAll(self):
-        ''' return all of the tasks as a list of dicts.'''
-        return self.runQuery("SELEC T rowid,* from transaction",())
+        query = 'UPDATE transactions SET {} WHERE id = {}'.format(', '.join(updates), transaction_id)
+        self.cursor.execute(query)
+        self.conn.commit()
 
-    def selectColumn(self, columnID):
-        ''' return all of the values from a certain column of the table'''
-        return self.runQuery("SELECT column{columnID}, * from transactions")
+    def delete_transaction(self, item_number):
+        """Deletes a transaction with the given item_number from the database."""
+        sql = "DELETE FROM transactions WHERE item_number = ?"
+        values = (item_number,)
+        self.cursor.execute(sql, values)
+        self.conn.commit()
 
-    def selectCompleted(self):
-        ''' return all of the completed tasks as a list of dicts.'''
-        return self.runQuery("SELECT rowid,* from transaction where completed=1",())
 
-    def add(self,item):
-        ''' create a transaction item and add it to the transactions table '''
-        return self.runQuery("INSERT INTO transactions VALUES(?,?,?)",(item['itemNum'],item['amount'],item['category'],item['date'],item['description']))
-        #self.runQuery("Insert INTO categories VALUES(?,?)", item['id'], item['name']))
-    
-    def delete(self,rowid):
-        ''' delete a transaction item '''
-        return self.runQuery("DELETE FROM transaction WHERE rowid=(?)",(rowid,))
+    def __del__(self):
+        """
+        Closes the connection to the SQLite database when the object is deleted.
+        """
+        self.conn.close()
 
-    def setComplete(self,rowid):
-        ''' mark a todo item as completed '''
-        return self.runQuery("UPDATE todo SET completed=1 WHERE rowid=(?)",(rowid,))
 
-    def runQuery(self,query,tuple, filename):
-        ''' return all of the uncompleted tasks as a list of dicts.'''
-        con= sqlite3.connect(filename)
-        cur = con.cursor() 
-        cur.execute(query,tuple)
-        tuples = cur.fetchall()
-        con.commit()
-        con.close()
-        return [toDict(t) for t in tuples]
-
-'''def __init__(self, filename):
-    conn = sqlite3.connect(filename)
-
-    c = conn.cursor()
-
-    c.execute(''CREATE TABLE transactions (
-    itemNum int,
-    amount int,
-    category varChar(255),
-    date varChar(255),
-    description varChar(255),
-)'')
-
-    conn.commit()
-    conn.close()'''
 
