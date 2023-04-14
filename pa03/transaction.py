@@ -47,6 +47,22 @@ class Transaction:
         query = 'UPDATE transactions SET {} WHERE id = {}'.format(', '.join(updates), transaction_id)
         self.cursor.execute(query)
         self.conn.commit()
+        
+    def update_transaction(self, item_number=None, amount=None, category=None, date=None, description=None):
+        """
+        Updates a transaction in the transactions table with the given id and parameters.
+        """
+        updates = []
+        if item_number is not None:
+            updates.append('item_number = {}'.format(item_number))
+        if amount is not None:
+            updates.append('amount = {}'.format(amount))
+        if category is not None:
+            updates.append('category = "{}"'.format(category))
+        if date is not None:
+            updates.append('date = "{}"'.format(date))
+        if description is not None:
+            updates.append('description = "{}"'.format(description))
 
     def delete_transaction(self, item_number):
         """Deletes a transaction with the given item_number from the database."""
@@ -54,7 +70,6 @@ class Transaction:
         values = (item_number,)
         self.cursor.execute(sql, values)
         self.conn.commit()
-
 
     def __del__(self):
         """
