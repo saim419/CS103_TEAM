@@ -41,23 +41,6 @@ class Transaction:
         self.cursor.execute(sql)
         return self.cursor.fetchall()
 
-
-    def update_transaction(self, item_number=None, amount=None, category=None, date=None, description=None):
-        """
-        Updates a transaction in the transactions table with the given id and parameters.
-        """
-        updates = []
-        if item_number is not None:
-            updates.append('item_number = {}'.format(item_number))
-        if amount is not None:
-            updates.append('amount = {}'.format(amount))
-        if category is not None:
-            updates.append('category = "{}"'.format(category))
-        if date is not None:
-            updates.append('date = "{}"'.format(date))
-        if description is not None:
-            updates.append('description = "{}"'.format(description))
-
         if len(updates) == 0:
             return
 
