@@ -51,6 +51,23 @@ def process_args(arglist):
         else:
             transaction.delete_transaction(arglist[1])
         print(f"Error: {arglist[0]} is not a valid command")
+    elif arglist[0] == "summarize transactions by date":
+        summary = transaction.summarize_by_date()
+        for date, total in summary.items():
+            print(f"{date}: {total}")
+    elif arglist[0] == "summarize transactions by month":
+        summary = transaction.summarize_by_month()
+        for month, total in summary.items():
+            print(f"{month}: {total}")
+    elif arglist[0] == "summarize transactions by year":
+        summary = transaction.summarize_by_year()
+        for year, total in summary.items():
+            print(f"{year}: {total}")
+    elif arglist[0] == "summarize transactions by category":
+        summary = transaction.summarize_by_category()
+        for category, total in summary.items():
+            print(f"{category}: {total}")
+    elif arglist[0] == "print this menu":
         print_menu()
 
 def toplevel():
