@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { generateShoeList } = require('../generateShoeList');
+const { generateClothingList } = require('../generateClothingList');
 
 router.get('/', (req, res) => {
     res.render('response', { response: '' });
@@ -8,8 +8,8 @@ router.get('/', (req, res) => {
 
 router.post('/', async (req, res) => {
     const input = req.body.input;
-    const shoeList = await generateShoeList(input);
-    res.json({ shoeList });
+    const clothingList = await generateClothingList(input);
+    res.json({ clothingList });
 });
 
 module.exports = router;
