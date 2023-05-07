@@ -2,24 +2,24 @@
 <html>
 
 <head>
-    <title>Shoe Brand Generator</title>
+    <title>Clothing Generator</title>
     <link rel="stylesheet" href="/styles.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
-    <h1>Shoe Brand Generator</h1>
-    <p>Enter your favorite brand of shoes:</p>
+    <h1>Clothing Generator</h1>
+    <p>Enter your favorite clothing items:</p>
     <form>
         <input type="text" name="brand" id="brand" required>
-        <button type="button" onclick="generateShoeList()">Generate Response</button>
+        <button type="button" onclick="generateClothingList()">Generate Response</button>
     </form>
-    <div id="shoeList"></div>
+    <div id="clothingList"></div>
     <script>
-        const generateShoeList = async () => {
+        const generateClothingList = async () => {
             const input = document.getElementById("brand").value;
-            const response = await axios.post("/generateShoeList", { input });
-            document.getElementById("shoeList").innerText = response.data;
+            const response = await axios.post("/generateClothingList", { input });
+            document.getElementById("clothingList").innerText = response.data;
         };
     </script>
 </body>
