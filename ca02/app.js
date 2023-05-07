@@ -40,15 +40,15 @@ db.once('open', function () {
 });
 
 
-app.get('/shoes/:input', async (req, res) => {
+app.get('/clothing/:input', async (req, res) => {
   // Get the shoe brand from the request URL
   const input = req.params.input;
 
   // Generate a list of shoes for the given brand using GPT
-  const shoes = await generateShoeList(input);
+  const clothing = await generateClothingList(input);
 
   // Render the shoe list template with the generated list of shoes
-  res.render('shoeList', { shoes });
+  res.render('clothingList', { clothing });
 });
 
 
