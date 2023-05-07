@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { generateShoeList } = require('./gpt.js');
+const { generateClothingList } = require('./gpt.js');
 
 // Form page
 router.get('/', (req, res) => {
@@ -13,10 +13,10 @@ router.post('/', async (req, res) => {
     const userInput = req.body.userInput;
 
     // Call the GPT method to get the list of shoes
-    const shoeList = await generateShoeList(userInput);
+    const clothingList = await generateClothingList(userInput);
 
     // Render the response page with the list of shoes
-    res.render('shoeList', { shoes });
+    res.render('clothingList', { shoes });
 });
 
 module.exports = router;
