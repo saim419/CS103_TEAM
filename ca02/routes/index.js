@@ -1,4 +1,4 @@
-async function generateShoeList() {
+async function generateClothingList() {
     // Get the user input from the form
     const input = document.getElementById('brand').value;
 
@@ -15,8 +15,8 @@ async function generateShoeList() {
     const data = await response.json();
 
     // Update the HTML to display the generated shoe list
-    const shoeList = data.shoeList;
-    const shoeListElement = document.getElementById('shoeList');
-    shoeListElement.innerHTML = shoeList;
+    const clothingList = data.clothingList;
+    const clothingListElement = document.getElementById('clothingList');
+    clothingListElement.innerHTML = clothingList;
 }
 
