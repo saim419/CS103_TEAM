@@ -1,0 +1,19 @@
+<h1> Transaction for <%= user.username%> </h1>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% results.forEach(category => { %>
+            <tr>
+              <td><%= category._id %></td>
+              <td>$<%= category.total %></td>
+            </tr>
+
+            <% }) %>
+
+    </tbody>
+</table>
